@@ -11,10 +11,10 @@
 #   -k          保留临时文件（调试用，默认删除）
 #
 # 示例：
-#   bash merge-blueprint.sh -s cbg-crm
-#   bash merge-blueprint.sh -d /home/user/docs -s ltc
-#   bash merge-blueprint.sh -o /tmp/4a-final.md
-#   bash merge-blueprint.sh -s cbg-crm -k
+#   bash merge-blueprint.sh -s my-project
+#   bash merge-blueprint.sh -d /path/to/docs -s my-project
+#   bash merge-blueprint.sh -o /path/to/4a-final.md
+#   bash merge-blueprint.sh -s my-project -k
 
 set -euo pipefail
 

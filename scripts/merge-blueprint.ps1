@@ -21,12 +21,12 @@
     若指定此开关，合并完成后不删除临时文件（调试用）。
 
 .EXAMPLE
-    # 基本用法：合并当前目录下的临时文件，场景名为 "cbg-crm"
-    .\merge-blueprint.ps1 -Scene cbg-crm
+    # 基本用法：合并当前目录下的临时文件，场景名为 "my-project"
+    .\merge-blueprint.ps1 -Scene my-project
 
 .EXAMPLE
     # 指定目录
-    .\merge-blueprint.ps1 -Dir "D:\rjws\rj-fsa\blueprint\cbg-crm\docs" -Scene ltc
+    .\merge-blueprint.ps1 -Dir "C:\path\to\docs" -Scene my-project
 
 .EXAMPLE
     # 指定完整输出路径
@@ -34,7 +34,7 @@
 
 .EXAMPLE
     # 保留临时文件（调试）
-    .\merge-blueprint.ps1 -Scene cbg-crm -KeepTmp
+    .\merge-blueprint.ps1 -Scene my-project -KeepTmp
 #>
 
 [CmdletBinding()]
