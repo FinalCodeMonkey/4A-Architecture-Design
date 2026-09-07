@@ -26,16 +26,16 @@
     合并完成后保留源输入文件（默认：保留；本参数仅作明确声明用）。
 
 .EXAMPLE
-    # 仅拆分
-    .\scripts\split-blueprint.ps1 -InputFile _raw_output.md
+    # 仅拆分（{技能目录} = 本 SKILL.md 所在目录）
+    & "{技能目录}\scripts\split-blueprint.ps1" -InputFile _raw_output.md
 
 .EXAMPLE
     # 拆分并立即合并
-    .\scripts\split-blueprint.ps1 -InputFile _raw_output.md -Merge -Scene {场景名}
+    & "{技能目录}\scripts\split-blueprint.ps1" -InputFile _raw_output.md -Merge -Scene {场景名}
 
 .EXAMPLE
     # 指定临时文件写出目录
-    .\scripts\split-blueprint.ps1 -InputFile _raw_output.md -Dir "{目标目录}" -Merge -Scene {场景名}
+    & "{技能目录}\scripts\split-blueprint.ps1" -InputFile _raw_output.md -Dir "{目标目录}" -Merge -Scene {场景名}
 #>
 
 [CmdletBinding()]

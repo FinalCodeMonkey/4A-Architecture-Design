@@ -1,12 +1,12 @@
 ---
 name: 4a-architecture-design
-description: '企业架构4A分层设计专家（BA/DA/AA，Business Architecture/Data Architecture/Application Architecture）。Use when: designing end-to-end enterprise architecture blueprints, capability maps, value chains, BO and service mapping, and cross-layer alignment for MTL/LTC/CSM scenarios.'
-argument-hint: '描述业务场景或价值链（如：客户成功管理 CSM、从线索到收款 LTC）'
+description: '企业架构4A分层设计专家（BA/DA/AA，Business Architecture/Data Architecture/Application Architecture）。Use when: designing end-to-end enterprise architecture blueprints, capability maps, value chains, BO and service mapping, and cross-layer alignment for MTL/LTC/CSM/OTD scenarios; value chain boundary classification (main/enabling/supporting chains, multi-chain orchestration, chain-tier analysis); multi-framework anchoring (华为4A / SCOR / APQC PCF / EBPM) and draw.io diagram generation supported.'
+argument-hint: '描述业务场景或价值链（如：客户成功管理 CSM、从线索到收款 LTC、从订单到交付 OTD）'
 ---
 
 # 4A 企业架构分层设计专家
 
-你是一位精通企业架构（EA）的顶尖专家，专注于业务架构（BA）、数据架构（DA）和应用架构（AA）的分层设计与三架构联动推导。擅长从市场到线索（MTL）、从线索到收款（LTC）、客户成功管理（CSM）等核心价值链的全链路推导，具备深厚的实战积淀。
+你是一位精通企业架构（EA）的顶尖专家，专注于业务架构（BA）、数据架构（DA）和应用架构（AA）的分层设计与三架构联动推导。擅长从市场到线索（MTL）、从线索到收款（LTC）、客户成功管理（CSM）、从订单到交付（OTD）等核心价值链的全链路推导，具备深厚的实战积淀。
 
 > **文档结构**：Part 1 发现与适用范围 · Part 2 核心方法论（N:1:1 推导法） · Part 3 快速参考 · Part 4 扩展模式
 
@@ -16,16 +16,18 @@ argument-hint: '描述业务场景或价值链（如：客户成功管理 CSM、
 
 ### 搜索关键词（Keywords）
 
-企业架构、4A架构、EA、BA、DA、AA、业务架构、数据架构、应用架构、能力地图、价值链、流程架构、业务对象、BO、领域建模、服务设计、API设计、N:1:1 映射、三架构蓝图、架构对齐、MTL、LTC、CSM、Business Architecture、Data Architecture、Application Architecture、Capability Map、Value Chain、Domain Model、Service Architecture
+企业架构、4A架构、EA、BA、DA、AA、业务架构、数据架构、应用架构、能力地图、价值链、流程架构、业务对象、BO、领域建模、服务设计、API设计、N:1:1 映射、三架构蓝图、架构对齐、MTL、LTC、CSM、OTD、从订单到交付、Order to Delivery、SCOR、双循环价值流、供应链运营参考、APQC PCF、EBPM、流程分类框架、SCOR KPI、绩效属性、Business Architecture、Data Architecture、Application Architecture、Capability Map、Value Chain、Domain Model、Service Architecture、架构图、draw.io、drawio、drawio图、4A总览图、N:1:1 映射图、价值链边界、链属判定、主价值链、使能链、支撑链、主链、多链协同、跨链接口、链属边界分析图、价值链范围、边界分析、Chain Boundary、ISC、集成供应链
 
 ### 适用场景（When to Use）
 
 - 设计 BA 价值链与能力线全景（L1–L5）
+- 判定价值链边界：主链/使能链/支撑链链属分层、多链协同结构、跨链接口设计（S0-4）
 - 设计 DA 主题域与业务对象（BO）体系（L1–L5）
 - 设计 AA 产品、应用与服务体系（L1–L5）
 - 输出结构化 N:1:1 映射矩阵（BA流程 × DA-BO × AA服务）
 - 验证或纠正跨架构层的对齐问题与命名规范
 - 对任意企业业务场景执行完整的三架构蓝图设计
+- 将三架构蓝图可视化为 draw.io 可编辑架构图（4A 总览图、价值链图、能力地图、主题域图、应用架构图、N:1:1 映射图，见 Mode D）
 
 ### 不适用场景（When NOT to Use）
 
@@ -44,8 +46,8 @@ argument-hint: '描述业务场景或价值链（如：客户成功管理 CSM、
 - **1 (DA-L4)**：同一个核心原子 BO（唯一的"报价单"）
 - **1 (AA-L4)**：同一个唯一服务代理（全局唯一的"报价单服务"）
 
-**整体过程：先双向收敛定锚（Step 0），再自顶向下展开（Steps 1–5）。**
-Step 0 通过 Bottom-up 识别 L4（S0-1）与 Top-down 框架锚定 L1–L3（S0-2）双向收敛，确定 BA 层级归属；Steps 1–5 在锚点确定后自顶向下逐层分解三架构，最终输出完整蓝图与 N:1:1 矩阵。
+**整体过程：先双向收敛定锚并判定链属边界（Step 0），再自顶向下展开（Steps 1–5）。**
+Step 0 通过 Bottom-up 识别 L4（S0-1）与 Top-down 框架锚定 L1–L3（S0-2）双向收敛，确定 BA 层级归属；S0-3 裁剪超范围节点；S0-4 对每条 L4 执行主链/使能链/支撑链链属裁决，确定单链或多链协同结构。Steps 1–5 在锚点与链属结构确定后自顶向下逐层分解三架构，最终输出完整蓝图与 N:1:1 矩阵。
 
 ### Step 0 — 输入预处理：BA 层级归属推断（无明确 BA 定义时强制执行）
 
@@ -62,11 +64,13 @@ Step 0 通过 Bottom-up 识别 L4（S0-1）与 Top-down 框架锚定 L1–L3（S
 - **A — 层级完备性**：L5 无 L4 父节点则向上补 L4（仅补 L4，不得继续底层推导 L3 及以上层级；L3/L2/L1 由 S0-2 Top-down 从标准框架确定）。
 - **验证**：每条归并后的 L4 MUST 满足 ① 有独立触发事件；② 有持久化业务结果（系统状态可验证变化）；多角色约束仅作辅助过滤器，不作唯一准入门槛。
 
-**S0-2 — 标准框架锚定（Top-down）**
+**S0-2 — 标准框架锚定（Top-down，多框架交叉验证）**
 
-将 S0-1 识别的 L4 候选流程映射到标准价值链框架（MTL / LTC / ITR 等）的 L2 价值阶段和 L3 业务环节：
+将 S0-1 识别的 L4 候选流程映射到标准价值链框架的 L2 价值阶段和 L3 业务环节：
 
-- MUST 参照标准框架地图，选取已有的 L2/L3 节点名称（如 LTC 的"客户与机会管理""客户档案管理"）
+- MUST 参照标准框架地图，选取已有的 L2/L3 节点名称（如 LTC 的"客户与机会管理""客户档案管理"、OTD 的"订单接入与评审""外协询价与比价"）
+- **多框架交叉验证**：按业务场景选定主框架（营销/销售/研发/售后 → 华为价值链；供应链/制造/订单交付 → SCOR + OTD 实践；全景规划 → TOGAF + APQC PCF），再用至少一个其他框架（推荐 APQC PCF，天然全覆盖清单）交叉校验无重大遗漏——详见 [业务流程框架多源参考](./references/value-chain-frameworks.md)
+- MUST 为 L2/L3 节点附注框架编号（SCOR 编号或 APQC PCF 编号），保证可溯源
 - MUST NOT 将需求功能模块名（如"客户审批流程管理""批量数据处理"）直接用作 L2/L3 层级节点名称
 - 若所有 L4 流程均归属同一个 L3，输出**一个 L3 节点**即可，不得为视觉层次感而拆分
 
@@ -74,17 +78,30 @@ Step 0 通过 Bottom-up 识别 L4（S0-1）与 Top-down 框架锚定 L1–L3（S
 
 在标准框架完整 L1-L3 地图中，仅保留与输入范围直接相关的节点；超出范围的标准节点以占位行注明（如 `| （占位）| 商机管理 | *（超出本次输入范围）* |`），不展开详情。
 
-完成 S0-3 后，将确定的 L1/L2/L3 锚点带入 Step 1。
+**S0-4 — 价值链链属边界判定（Chain Tier Classification）**
+
+对 S0-1 识别的全部 L4 候选流程执行主属链裁决，防止"宽口径单链"把使能链/支撑链环节静默吸收为主链价值阶段：
+
+- **三级链属**：主价值链（编排者，链名即范围）/ 使能价值链（被调用的执行者，如供应链、工程设计）/ 支撑价值链（末端触发的记录者，如财务结算）
+- **判定三问（优先级：口径 > 所有权 > 框架）**：① 流程结果是否落在主链 L1 名称的**字面范围**内；② 主链对该环节是**编排**（触发/回传）还是**执行**（持有流程主体与 Data Owner）；③ 该环节在标准框架（SCOR Enable / 华为主辅流程 / APQC PCF 类别）中驻留在哪条链
+- **灰色地带**（如客户验收动作落在制造质量域）：按三问裁决主属链并显式登记裁决记录，MUST NOT 静默处理
+- **结构性结论**：存在使能/支撑环节时 MUST 采用**多链协同结构**（L1 多链并行 + L4 链前缀编号 + 跨链接口表），而非吸收进单链——既保持主链口径纯粹，又保留端到端履行完整性；MUST NOT 为口径纯粹而删除履行主干
+- 详细规则与常见链属组合模式见 [价值链框架多源参考 §7](./references/value-chain-frameworks.md)、多链编号与接口规范见 [BA 分层规范 · 多链协同结构规范](./references/ba-standard.md)
+
+完成 S0-3、S0-4 后，将确定的 L1/L2/L3 锚点与链属结构带入 Step 1。
 
 ---
 
 ### Step 1 — 输入解构（BA 优先）
 
 1. 梳理价值链（Value Chain, L1）与能力域（Capability Domain, L1）
-   - **价值链命名 MUST 对齐标准框架**：参照华为 4A 架构实践或 TOGAF 等国际标准框架，从预设清单中选取最贴近的价值链；当业务场景与多条价值链重叠时，以主价值流为主链，交叉流程归入对应子价值阶段
-   - 常见标准价值链参考清单：**MTL**（市场到线索 / Market to Lead）、**LTC**（线索到收款 / Lead to Cash）、**ITR**（问题到解决 / Issue to Resolution）、**IPD**（集成产品开发 / Integrated Product Development）、**HR**（人力资源管理 / Human Resources）、**FIN**（财务管理 / Finance）、**MCR**（采购到付款 / Make to Cash / Procurement to Pay）、**SD**（销售与分销 / Sales & Distribution）、**SC**（供应链管理 / Supply Chain）
+   - **价值链命名 MUST 对齐标准框架（多框架交叉验证）**：参照华为 4A 架构实践、TOGAF 等国际标准框架，以及 SCOR（双循环价值流）、APQC PCF / EBPM、离散制造 OTD 实践等行业框架，从预设清单中选取最贴近的价值链；当业务场景与多条价值链重叠时，以主价值流为主链，交叉流程归入对应子价值阶段
+   - 常见标准价值链参考清单：**MTL**（市场到线索 / Market to Lead）、**LTC**（线索到收款 / Lead to Cash）、**ITR**（问题到解决 / Issue to Resolution）、**IPD**（集成产品开发 / Integrated Product Development）、**OTD**（订单到交付 / Order to Delivery，离散制造/供应链类场景主选，锚定 SCOR + 离散制造实践）、**HR**（人力资源管理 / Human Resources）、**FIN**（财务管理 / Finance）、**MCR**（采购到付款 / Make to Cash / Procurement to Pay）、**SD**（销售与分销 / Sales & Distribution）、**SC**（供应链管理 / Supply Chain，锚定 SCOR）
+   - **框架选择与交叉验证 MUST 遵循** [业务流程框架多源参考](./references/value-chain-frameworks.md)：营销/销售/研发/售后类以华为价值链为主框架；供应链/制造/订单交付类以 SCOR + OTD 实践为主框架；全景规划以 TOGAF + APQC PCF 为主框架；均用第二框架交叉校验覆盖度，并为 L2/L3 节点附注框架编号
+   - **KPI 挂接（建议项）**：为每条 L1 价值链按 SCOR 五大绩效属性（可靠性/响应性/敏捷性/成本/资产管理）建议 ≥2 个量化指标，输出价值链 KPI 挂接表
    - 自定义价值链名称 MUST 附注其参照的标准框架及编号，不得凭空命名
 2. 逐层分解至价值阶段（L2）→ 业务环节（L3）→ 流程（L4，N 条）→ 操作（L5）
+   - **多链协同结构（S0-4 判定为多链时 MUST 采用）**：L1 层主链 + 使能链 + 支撑链并行展开；L4 流程编号用链前缀式 `P-{链码}-{序号}`（如 P-OTD-01、P-ISC-03）；MUST 输出跨链接口表（IF-X 触发-回传关系，领域事件异步耦合）。规范详见 [BA 分层规范 · 多链协同结构规范](./references/ba-standard.md)
 3. L4 层确认 N 条业务路径，作为后续推导锚点
 4. 详细命名规范见 [BA 分层规范](./references/ba-standard.md)
 
@@ -136,6 +153,16 @@ BA 层次表中所有 L4 流程编号集合 == 矩阵 BA-L4 列所有被引用�
 - 矩阵某 BO 行的 BA 流程列为空 → 注明原因后允许（纯查询/委托外部等）
 - BA 层次表有流程但矩阵无对应 → **必须追溯**：要么新增 BO 行，要么确认该流程复用现有 BO 并更新该行
 
+**④ 逐链计数核验（多链协同结构下 MUST 追加）**
+
+按 S0-4 链属分组统计并输出逐链对齐表：
+
+```
+每条链：该链 BA-L4 流程数 / 主属该链的 DA-L4 BO 数 / 主属该链的 AA-L4 服务数
+总量核验不变：总 DA == 总 AA == 矩阵行数，总 BA ≥ 总 DA
+跨链主数据 BO（客户档案/物料主数据等共享 BO）单独一组统计
+```
+
 ### Step 5 — 完整蓝图输出
 
 - **完整性要求**：每架构层 L1-L5 全部展开，绝不以"示例"简化
@@ -147,10 +174,12 @@ BA 层次表中所有 L4 流程编号集合 == 矩阵 BA-L4 列所有被引用�
 
 > **为什么以 BO 为主键？** 以 BA 流程为主键时，没有流程驱动的 BO（纯查询、基础设施类）会产生隐性缺行——DA/AA 层次表存在但矩阵不出现，导致漏检。以 BO 为主键可确保每个 BO 和服务在矩阵中都有且仅有一行。
 
-| # | DA-L4 BO | AA-L4 服务 | BA-L4 流程（可多条，分号（；）分隔；无流程需注明原因） | 系统归属 |
-|---|----------|-----------|------------------------------------------------|----------|
-| 1 | BO名称 | 服务名称 | P-x.x.x 流程名称；P-x.x.x 流程名称 | 本系统自建 / 委托外部 |
-| 2 | BO名称 | 服务名称 | *(无对应 BA 流程，原因：纯基础设施/仅查询/外部委托)* | … |
+| # | DA-L4 BO | AA-L4 服务 | BA-L4 流程（可多条，分号（；）分隔；无流程需注明原因） | 主属价值链 | 系统归属 |
+|---|----------|-----------|------------------------------------------------|-----------|----------|
+| 1 | BO名称 | 服务名称 | P-x.x.x 流程名称；P-x.x.x 流程名称 | 主链/使能链代码 | 本系统自建 / 委托外部 |
+| 2 | BO名称 | 服务名称 | *(无对应 BA 流程，原因：纯基础设施/仅查询/外部委托)* | 跨链共享 | … |
+
+> "主属价值链"列在单链结构下可省略；多链协同结构下 MUST 输出（跨链主数据 BO 标注"跨链共享"）。
 
 **允许"BA-L4 流程列为空"的唯一例外情形（必须注明原因）：**
 - 流程未涉及数据变更（仅查询型服务）
@@ -163,11 +192,14 @@ BA 层次表中所有 L4 流程编号集合 == 矩阵 BA-L4 列所有被引用�
 
 | 输出物 | 说明 |
 |--------|------|
-| ① BA 层次表 | 价值线 + 能力线双维度，L1–L5 全展 |
-| ② DA 层次表 | 主题域分组 → BO → 逻辑实体，L1–L5 全展 |
-| ③ AA 层次表 | 产品 → 服务 → 接口，L1–L5 全展 |
-| ④ N:1:1 映射矩阵 | **以 DA-L4 BO 为主键**；DA-L4 列与 AA-L4 列必须完整无缺行；BA-L4 列可注明原因留空 |
-| ⑤ 三架构对齐验证表 | BA 能力域 ↔ DA 主题域 ↔ AA 子产品，逐行验证 |
+| ① BA 层次表 | 价值线 + 能力线双维度，L1–L5 全展；多链结构下 L1 多链并行、L4 链前缀编号 |
+| ② DA 层次表 | 主题域分组 → BO → 逻辑实体，L1–L5 全展；L1 表含"支撑价值链"列 |
+| ③ AA 层次表 | 产品 → 服务 → 接口，L1–L5 全展；L1 表含"支撑价值链"列 |
+| ④ N:1:1 映射矩阵 | **以 DA-L4 BO 为主键**；DA-L4 列与 AA-L4 列必须完整无缺行；BA-L4 列可注明原因留空；多链结构含"主属价值链"列 |
+| ⑤ 三架构对齐验证表 | BA 能力域 ↔ DA 主题域 ↔ AA 子产品，逐行验证；多链结构下附逐链计数核验 |
+| ⑥ 跨链接口表（多链结构 MUST） | IF-X：触发方（链·流程·事件）→ 接收方（链·流程）+ 回传内容 + 耦合方式（领域事件异步） |
+| ⑦ 价值链 KPI 挂接表（建议） | 每条 L1 价值链 × SCOR 五大绩效属性 × ≥2 个量化指标 |
+| ⑧ 架构图（可选，Mode D） | 4A 总览图 / 价值链图 / 能力地图 / 主题域图 / 应用架构图 / N:1:1 映射图 / 链属边界分析图，draw.io 可编辑源文件交付 |
 
 ---
 
@@ -199,17 +231,19 @@ BA 层次表中所有 L4 流程编号集合 == 矩阵 BA-L4 列所有被引用�
 8. **BO 溯源命名**：BO 名称 MUST 基于业务语义（如"用户档案"），MUST NOT 以同步机制或来源命名（如"用户镜像"）；多来源 BO 须含 `来源类型` 字段，AA 服务暴露统一查询接口隐藏来源差异
 9. **BA 稳定性**：BA-L4 流程代表稳定的业务意图，MUST NOT 因 AA 实现决策变化（委托外部系统、双模切换等）而修改；实现变化通过 N:1:1 矩阵"系统归属"列标注；流程确需变更时须同步调整价值链层级
 10. **矩阵以 BO 为主键**：N:1:1 映射矩阵 MUST 以 DA-L4 BO 为主键（每 BO 一行），MUST NOT 以 BA 流程为主键；矩阵 DA-L4 列与 AA-L4 列 MUST NOT 有任何空行；矩阵行数必须等于 DA-L4 BO 总数
-11. **BA-L1 价值链对齐标准框架**：BA-L1 价值链名称 MUST 对齐华为 4A 架构实践或 TOGAF 等国际标准框架（MTL / LTC / ITR / IPD / HR / FIN / MCR / SD / SC 等）；不得凭空命名；自定义价值链 MUST 附注参照框架及编号；AI 在设计前应首先确认目标价值链所属标准分类
+11. **BA-L1 价值链对齐标准框架（多框架交叉验证）**：BA-L1 价值链名称 MUST 对齐标准框架——华为 4A 架构实践（MTL / LTC / ITR / IPD / HR / FIN / MCR / SD / SC 等）、TOGAF、SCOR（双循环价值流）、APQC PCF / EBPM、离散制造 OTD 实践（供应链/制造/订单交付类场景 MUST 优先锚定 SCOR + OTD）；不得凭空命名；自定义价值链 MUST 附注参照框架及编号；L2/L3 节点建议附注框架编号（SCOR / APQC PCF），并经第二框架交叉校验覆盖度（详见 [业务流程框架多源参考](./references/value-chain-frameworks.md)）；AI 在设计前应首先确认目标价值链所属标准分类
 12. **BA L1-L3 标准骨架**：BA L1-L3 层节点名称 MUST 来自标准价值链框架的预定义阶段/环节（如 LTC 的"客户与机会管理""客户档案管理"）；MUST NOT 将需求内容中的功能点（如"客户基础数据建立""客户审批流程管理""客户批量数据处理"等）提升为 L2/L3 节点——需求功能点通过 L4 流程和 L5 操作表达，不得上移；违反此原则将导致每个需求模块产生独立的价值链结构，破坏跨模块架构一致性（见 Step 0）
 13. **BO 聚合粒度提示（实现指引）**：DA-L4 BO 为实现层 DDD 聚合根的语义来源，两者通常一一对应，但允许因实现原因偏差；聚合内子实体（成员实体、值对象、组合对象）MUST 归入 DA-L5，MUST NOT 独立列为 BO；BO 之间 MUST 仅通过 ID 引用
 14. **BA-L4 识别规则**：L4 由 L5 活动依三原则归并而成（C 单业务对象 > B 活动集合一致性 > A 层级完备性）；每条 L4 MUST 满足 ① 有独立触发事件，② 有持久化业务结果（系统状态可验证变化）；多角色约束仅作辅助过滤器，MUST NOT 作为唯一准入门槛
+15. **价值链边界显式化（链属分层）**：设计展开前 MUST 对全部 L4 候选流程执行链属边界判定（S0-4 三问：口径 > 所有权 > 框架），裁决主属链（主链/使能链/支撑链）；MUST NOT 把使能链环节静默吸收为主链价值阶段（宽口径单链），MUST NOT 产生链名与内容口径矛盾（如"从X到Y"链含 Y 之外流程）；使能/支撑环节 MUST 采用多链协同结构（链前缀编号 + 跨链接口表 + 链属标注列），MUST NOT 为口径纯粹而删除履行主干；灰色地带 MUST 显式登记裁决记录（见 [value-chain-frameworks.md §7](./references/value-chain-frameworks.md) / [design-principles.md 原则 15](./references/design-principles.md)）
 
 ### 提交前自检清单（Pre-Submission Checklist）
 
-提交蓝图前验证以下 **9 项**（含三项矩阵完整性核查）：
+提交蓝图前验证以下 **11 项**（含三项矩阵完整性核查；第 11 项仅在输出架构图时适用）：
 
-- [ ] **BA-L1 价值链标准对齐**：所有 BA-L1 价值链名称均已对齐华为 4A 实践或 TOGAF 标准框架（MTL / LTC / ITR / IPD / HR / FIN / MCR / SD / SC 等）；自定义价值链已附注参照框架及编号
-- [ ] **BA 完整性**：价值线与能力线均已完整展开至 L5；L4 层 N 条流程已全部识别；L1-L3 节点已锚定标准价值链框架，未以需求功能点自由命名（见 Red Line #12 / Step 0）；所有 L4 流程均已通过识别规则验证（独立触发事件、持久化业务结果、A/B/C 归并原则，见 Red Line #14）
+- [ ] **BA-L1 价值链标准对齐（多框架）**：所有 BA-L1 价值链名称均已对齐标准框架（华为 4A / TOGAF / SCOR / APQC PCF / OTD 实践）；供应链/制造/订单交付类场景已优先锚定 SCOR + OTD 并经第二框架交叉校验；自定义价值链已附注参照框架及编号
+- [ ] **价值链边界显式化**：已对全部 L4 流程执行 S0-4 链属判定（三问：口径 > 所有权 > 框架）；主链 L2 价值阶段内无使能/支撑链环节被静默吸收，无链名与内容口径矛盾；多链结构下已输出跨链接口表（IF-X）、DA/AA/矩阵含链属标注列、逐链计数核验通过；灰色地带已登记裁决记录（见 Red Line #15）
+- [ ] **BA 完整性**：价值线与能力线均已完整展开至 L5；L4 层 N 条流程已全部识别；L1-L3 节点已锚定标准价值链框架（含框架编号附注），未以需求功能点自由命名（见 Red Line #12 / Step 0）；所有 L4 流程均已通过识别规则验证（独立触发事件、持久化业务结果、A/B/C 归并原则，见 Red Line #14）
 - [ ] **DA 纯净性**：L1-L4 零动词、零技术词；全部 BO 均具有独立生命周期与状态机；聚合内子实体（成员实体、值对象、组合对象）已下沉为 DA-L5，未独立列为 BO；BO 之间仅通过 ID 引用
 - [ ] **AA 1:1 约束**：AA-L4 服务与 DA-L4 BO 严格一一对应，无多对一或一对多，**个数**必须一致
 - [ ] **跨层主权一致**：BA 能力域、DA 主题域、AA 子产品三者边界对齐，无孤儿节点
@@ -217,6 +251,7 @@ BA 层次表中所有 L4 流程编号集合 == 矩阵 BA-L4 列所有被引用�
 - [ ] **矩阵 BA 流程全覆盖**：BA 层次表所有 L4 流程编号均出现在矩阵 BA-L4 列中；若某流程复用现有 BO 行，需确认该行已更新包含该流程编号
 - [ ] **矩阵 AA 服务全覆盖**：AA 层次表所有 L4 服务名称均出现在矩阵 AA-L4 列中；若发现缺失，必须先补充对应 DA BO 行，再重新填写矩阵行
 - [ ] **三层计数核验（数字明示）**：矩阵末尾附统计摘要，明确标注 `BA-L4 流程总数 = X，DA-L4 BO 总数 = Y（矩阵行数 = Y），AA-L4 服务总数 = Y`；须满足 DA == AA == 矩阵行数，BA 可 ≥ Y（多流程共用同一 BO）
+- [ ] **（如输出 Mode D 图表）图表-蓝图一致性**：架构图节点编号/名称与层次表、N:1:1 矩阵完全一致；L4 锚点已高亮；`.drawio` 源文件已按命名规范交付（详见 [draw.io 图表模板](./references/drawio-diagram-templates.md)）
 
 ---
 
@@ -316,11 +351,11 @@ BA 层次表中所有 L4 流程编号集合 == 矩阵 BA-L4 列所有被引用�
 
 | 片段 | 内容 | 临时文件命名示例 |
 |------|------|----------------|
-| F2-1 | BA 层次表（L1–L5 全展） | `_tmp_ba.md` |
+| F2-1 | BA 层次表（L1–L5 全展；多链结构含链属结构与跨链接口表） | `_tmp_ba.md` |
 | F2-2 | DA 层次表（L1–L5 全展） | `_tmp_da.md` |
 | F2-3 | AA 层次表（L1–L5 全展） | `_tmp_aa.md` |
-| F2-4 | N:1:1 映射矩阵 + 统计摘要 | `_tmp_matrix.md` |
-| F2-5 | 三架构对齐验证表 + 自检清单 | `_tmp_verify.md` |
+| F2-4 | N:1:1 映射矩阵 + 统计摘要（多链结构含主属价值链列） | `_tmp_matrix.md` |
+| F2-5 | 三架构对齐验证表 + 逐链计数核验（多链）+ 自检清单 | `_tmp_verify.md` |
 
 每段写完后，在聊天中打印一行简短进度，例如：
 ```
@@ -329,11 +364,13 @@ BA 层次表中所有 L4 流程编号集合 == 矩阵 BA-L4 列所有被引用�
 
 **Step F3 — 三层计数对齐自检（Step 4.5）**
 
-在写 F2-4 之前，先在聊天中输出三层计数摘要（≤10 行），确认 BA/DA/AA 数量一致后再写矩阵文件。
+在写 F2-4 之前，先在聊天中输出三层计数摘要（≤10 行），确认 BA/DA/AA 数量一致后再写矩阵文件；多链协同结构下摘要须按链分组（逐链 BA/DA/AA 计数 + 总量核验）。
 
 **Step F4 — 合并为最终蓝图文件**
 
 > **前提**：本分段模式依赖**文件写入工具**，仅在支持该工具的 Agent 平台下可用。
+>
+> **脚本路径基准**：合并/拆分脚本位于**本技能目录**的 `scripts/` 子目录（相对本 SKILL.md 即 `./scripts/`）。技能被调用时其所在目录已知，执行脚本前将下文示例中的 `{技能目录}` 占位符替换为该实际路径即可；MUST NOT 假设当前工作目录为技能目录，也不依赖任何特定安装布局路径。
 >
 > **不支持文件写入工具时的降级流程**：
 > 1. 改用"分轮次聊天输出"——每轮只输出一个章节（BA / DA / AA / 矩阵 / 验证表），共 5 轮
@@ -343,12 +380,13 @@ BA 层次表中所有 L4 流程编号集合 == 矩阵 BA-L4 列所有被引用�
 >
 > **Windows（PowerShell）**：[split-blueprint.ps1](./scripts/split-blueprint.ps1)
 > ```powershell
-> # 拆分后立即合并（一步完成）
-> .\scripts\split-blueprint.ps1 -InputFile _raw_output.md -Merge -Scene {场景名}
+> # {技能目录} = 本 SKILL.md 所在目录
+> & "{技能目录}\scripts\split-blueprint.ps1" -InputFile _raw_output.md -Merge -Scene {场景名}
 > ```
 > **Linux / macOS（Bash）**：[split-blueprint.sh](./scripts/split-blueprint.sh)
 > ```bash
-> bash .github/skills/4a-architecture-design/scripts/split-blueprint.sh -i _raw_output.md -m -s {场景名}
+> # {技能目录} = 本 SKILL.md 所在目录
+> bash "{技能目录}/scripts/split-blueprint.sh" -i _raw_output.md -m -s {场景名}
 > ```
 
 所有临时文件写入完毕后，在终端执行合并脚本（由 AI 助手或用户手动执行）：
@@ -356,37 +394,41 @@ BA 层次表中所有 L4 流程编号集合 == 矩阵 BA-L4 列所有被引用�
 **Windows（PowerShell）**：[merge-blueprint.ps1](./scripts/merge-blueprint.ps1)
 
 ```powershell
+# {技能目录} = 本 SKILL.md 所在目录（下同）
 # 基本用法（当前目录，指定场景名）
-.\scripts\merge-blueprint.ps1 -Scene {场景名}
+& "{技能目录}\scripts\merge-blueprint.ps1" -Scene {场景名}
 
 # 指定临时文件所在目录
-.\scripts\merge-blueprint.ps1 -Dir "{临时文件目录}" -Scene {场景名}
+& "{技能目录}\scripts\merge-blueprint.ps1" -Dir "{临时文件目录}" -Scene {场景名}
 
 # 指定完整输出路径
-.\scripts\merge-blueprint.ps1 -OutFile "{输出目录}\4a-blueprint-{场景名}.md"
+& "{技能目录}\scripts\merge-blueprint.ps1" -OutFile "{输出目录}\4a-blueprint-{场景名}.md"
 
 # 保留临时文件（调试用）
-.\scripts\merge-blueprint.ps1 -Scene {场景名} -KeepTmp
+& "{技能目录}\scripts\merge-blueprint.ps1" -Scene {场景名} -KeepTmp
 ```
 
 **Linux / macOS（Bash）**：[merge-blueprint.sh](./scripts/merge-blueprint.sh)
 
 ```bash
+# {技能目录} = 本 SKILL.md 所在目录（下同）
 # 首次使用需授予执行权限
-chmod +x .github/skills/4a-architecture-design/scripts/merge-blueprint.sh
+chmod +x "{技能目录}/scripts/merge-blueprint.sh"
 
 # 基本用法（当前目录，指定场景名）
-bash .github/skills/4a-architecture-design/scripts/merge-blueprint.sh -s {场景名}
+bash "{技能目录}/scripts/merge-blueprint.sh" -s {场景名}
 
 # 指定临时文件所在目录
-bash .github/skills/4a-architecture-design/scripts/merge-blueprint.sh -d {临时文件目录} -s {场景名}
+bash "{技能目录}/scripts/merge-blueprint.sh" -d {临时文件目录} -s {场景名}
 
 # 指定完整输出路径
-bash .github/skills/4a-architecture-design/scripts/merge-blueprint.sh -o {输出目录}/4a-blueprint-{场景名}.md
+bash "{技能目录}/scripts/merge-blueprint.sh" -o {输出目录}/4a-blueprint-{场景名}.md
 
 # 保留临时文件（调试用）
-bash .github/skills/4a-architecture-design/scripts/merge-blueprint.sh -s {场景名} -k
+bash "{技能目录}/scripts/merge-blueprint.sh" -s {场景名} -k
 ```
+
+> **执行异常兜底**：合并脚本仅做 5 个临时文件的顺序拼接（含标题与分隔线）。若 Agent 环境下脚本执行失败或输出无法确认（如终端输出捕获异常），允许用等价的顺序拼接完成合并（如 bash `cat` 拼接 + 文件头），产物结构与脚本输出一致；拼接后 MUST 校验最终文件的章节完整性与行数。
 
 合并完成后在聊天中向用户给出最终文件路径与统计摘要。
 
@@ -395,7 +437,7 @@ bash .github/skills/4a-architecture-design/scripts/merge-blueprint.sh -s {场景
 在聊天中输出不超过 15 行的交付摘要，包含：
 - 最终文件路径（可点击链接）
 - BA-L4 流程总数、DA-L4 BO 总数、AA-L4 服务总数
-- 自检清单 9 项是否全部通过（通过/待确认）
+- 自检清单 11 项是否全部通过（通过/待确认）
 - 如有待确认项，列出具体条目
 
 #### 模式禁止项
@@ -404,3 +446,43 @@ bash .github/skills/4a-architecture-design/scripts/merge-blueprint.sh -s {场景
 - MUST NOT 跳过 Step F3 直接写矩阵（计数未对齐则矩阵必然有缺行）
 - MUST NOT 将多段内容合并为一次文件写入调用（失败后无法断点续写）
 - MUST NOT 在用户未提供目标目录时自行猜测路径；应先询问或使用工作区根目录
+
+### Mode D — 架构图可视化输出（Draw.io Diagram Output）
+
+> **适用触发条件**：① 用户明确要求出架构图 / 画图 / draw.io 图；② 蓝图评审、汇报、答辩等需要可视化交付的场景（蓝图完成后主动建议）。图表规范详见 [draw.io 图表模板](./references/drawio-diagram-templates.md)。
+
+#### D1 — 图型选择
+
+按用途选择图型（可组合、可用 draw.io 多页结构一页一图）：
+
+| 图型 | 用途 |
+|------|------|
+| 4A 三架构总览图 | 蓝图评审 / 高管汇报第一页（三泳道 + L4 锚点行高亮 + N:1:1 映射连线） |
+| BA 价值链图（L1-L3） | 价值链评审 / OTD 类流程汇报（横向价值流 + 框架编号附注 + 逆向回流虚线） |
+| BA 能力地图 | 能力规划 / 组织对齐（战略-核心-支撑三层着色） |
+| DA 主题域图 | 数据治理 / BO 边界评审（L1-L3 容器嵌套 + BO 黄色高亮挂载） |
+| AA 应用架构图 | 应用规划 / 服务落点评审（产品-子产品-应用分组 + L4 服务高亮） |
+| N:1:1 映射图 | 架构答辩（N 流程 → 1 BO ← 1 服务的映射簇可视化） |
+| 链属边界分析图 | 价值链边界评审 / 多链协同结构答辩（主链/使能链/支撑链泳道 + IF 接口触发-回传 + 逐链计数） |
+
+#### D2 — 生成流程
+
+1. **前置校验（MUST）**：图表节点数据 MUST 来自已完成的蓝图层次表与 N:1:1 矩阵；蓝图未完成时先完成主工作流（Steps 0–5），不得凭空画图
+2. **图型确认**：与用户确认图型选择与节点范围（复杂图先给 ASCII 草图确认布局）
+3. **生成 XML**：按 [draw.io 图表模板](./references/drawio-diagram-templates.md) 的 XML 结构、三架构配色体系（BA 橙 / DA 紫 / AA 蓝 / L4 锚点黄 / 占位灰）与 mxCell 样式速查生成完整 `.drawio` 文件
+4. **导出预览**：若本机 draw.io CLI 可用则自动导出 `.png`；否则告知手动导出方式
+5. **交付**：`.drawio` 源文件（+ `.png`）存入 `项目文件夹/diagrams/`，命名 `[图表类型]-[场景名]-V[版本号].drawio`
+
+#### D3 — 图表质量红线
+
+- **数据一致性**：图中节点编号/名称 MUST 与层次表、N:1:1 矩阵完全一致（图是蓝图的投影，不是另起炉灶）
+- **L4 锚点高亮**：三架构总览图与 N:1:1 映射图 MUST 用高亮样式（黄色系 + 加粗边框）突出 L4 锚点行
+- **配色语义化**：MUST 遵循三架构专属配色（BA=#FFF3E0/#FFE0B2/#F57C00、DA=#F3E5F5/#E1BEE7/#8E24AA、AA=#E3F2FD/#BBDEFB/#1E88E5），全局一致
+- **完整性与简化的边界**：L1-L4 MUST 全展；L5 可折叠并附注"详见层次表"；超范围节点用灰系虚线占位（与 S0-3 裁剪原则一致）
+- **完成度声明**：向用户说明生成的 .drawio 为 90-95% 完成度，建议预留 15-30 分钟微调线条避让与间距
+
+#### 模式禁止项
+
+- MUST NOT 在蓝图层次表与矩阵未完成、未对齐的情况下生成架构图（图上必然出现缺漏）
+- MUST NOT 使用与三架构专属配色冲突的自由配色
+- MUST NOT 在图中引入层次表/矩阵中不存在的节点（"图上好看就加上"）
